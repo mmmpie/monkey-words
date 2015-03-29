@@ -1,0 +1,16 @@
+{
+  "name": "monkey-words",
+  "description": "An HTML/JS/CSS app",
+  "version": "0.0.1",
+  "private": true,
+  "author": "John Doe",
+  "devDependencies": {
+    "gulp-jasmine": "^2.0.0",
+    "jasmine": "^2.2.1",
+    "lineman": "~0.34.0"
+  },
+  "scripts": {
+    "start": "lineman run",
+    "test": "lineman spec-ci"
+  }
+}
