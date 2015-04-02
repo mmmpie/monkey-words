@@ -1,10 +1,10 @@
 (function(){
     'use strict';
 
-    module( 'models' )
+    feature( 'models' )
     .game = function(){
-        var pieces = module().models.pieces();
-        var _public = module().models.model();
+        var pieces = feature().models.pieces();
+        var _public = feature().models.model();
 
         var _private = {
             // set up the pieces which are shared in the middle of the table
@@ -15,7 +15,7 @@
         };
 
         _public.addPlayer = function( name ){
-            var newPlayer = module().models.player( name );
+            var newPlayer = feature().models.player( name );
             _private.players.push( newPlayer );
         };
 

@@ -1,5 +1,5 @@
 (function(){
-    module( 'core' )
+  feature( 'core' )
     .logging = function(){
         var _public = {};
 

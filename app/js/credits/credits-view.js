@@ -1,9 +1,9 @@
 (function(){
     'use strict';
 
-    module( 'credits' )
+    feature( 'credits' )
     .view = function(selector){
-        var _public = module().core.view();
+        var _public = feature().core.view();
 
         selector = selector | '.main';
         _public.selector( selector );

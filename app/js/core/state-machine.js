@@ -1,11 +1,11 @@
 (function(){
 	'use strict';
 
-	module( 'stateMachines' )
+	feature( 'stateMachines' )
 	.stateMachine = function(){
-		var _log = module().core.logging();
-		var _ = module().libraries.lodash;
-		var $ = module().libraries.jquery;
+		var _log = feature().core.logging();
+		var _ = feature().libraries.lodash;
+		var $ = feature().libraries.jquery;
 
 		var _public = {};
 		var running = false;

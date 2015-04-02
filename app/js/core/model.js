@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    module( 'models' )
+    feature( 'models' )
     .model = function(){
         var _public = {};
         return _public;

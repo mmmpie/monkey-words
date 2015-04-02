@@ -1,9 +1,9 @@
 (function(){
     'use strict';
 
-    module( 'models' )
+    feature( 'models' )
     .player = function(){
-        var _public = module().models.model();
+        var _public = feature().models.model();
 
         var _private = {
             name: '',

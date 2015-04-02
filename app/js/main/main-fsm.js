@@ -1,9 +1,9 @@
 (function(){
 	'use strict';
 
-	module( 'stateMachines' )
+	feature( 'stateMachines' )
 	.main = function(){
-		var _public = module().stateMachines.stateMachine();
+		var _public = feature().stateMachines.stateMachine();
 
 		_public.addTransition( 'start', 'intro' );
 		_public.addTransition( 'intro', ['highscores', 'demo', 'game']);

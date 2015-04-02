@@ -1,7 +1,7 @@
 (function(){
-    module( 'core' )
+  feature( 'core' )
     .timer = function( intervalTime ){
-        var _log = module().core.logging();
+        var _log = feature().core.logging();
         var _private = {
             interval: intervalTime,
             timer: null,
@@ -24,7 +24,6 @@
         };
 
         _public.tick = function(){
-            _log.info( 'tick' );
             _.each(_private.listeners, function(listener){
                 listener( 'tick' );
             });

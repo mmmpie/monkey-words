@@ -1,10 +1,10 @@
 (function(){
     'use strict';
 
-    module( 'models' )
+    feature( 'models' )
     .pieces = function(){
-        var _ = module().libraries.lodash();
-        var _public = module().Models.model();
+        var _ = feature().libraries.lodash();
+        var _public = feature().Models.model();
 
         _public.setupPieces = function(){
             var sum = function( data ){

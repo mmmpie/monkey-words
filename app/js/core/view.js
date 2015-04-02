@@ -9,10 +9,10 @@
      *
      * @return {object}
      */
-    module( 'views' )
+     feature( 'views' )
     .view = function(selector){
-        var _ = module().libraries.lodash;
-        var $ = module().libraries.jquery;
+        var _ = feature().libraries.lodash;
+        var $ = feature().libraries.jquery;
         var _public = {};
 
         var _private = {

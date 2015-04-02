@@ -1,9 +1,9 @@
 (function(){
     'use strict';
 
-    module( 'views' )
+    feature( 'views' )
     .highScores = function(){
-        var _public = module().views.view();
+        var _public = feature().views.view();
         _public.selector( 'body' );
 
         _public.render = function( data ){

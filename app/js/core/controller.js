@@ -1,7 +1,7 @@
 (function(){
     'use strict';
 
-    module( 'controllers' )
+    feature( 'controllers' )
     .controller = function( selector ){
         var _public = {};
         var _private = {

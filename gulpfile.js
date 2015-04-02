@@ -19,7 +19,6 @@ gulp.task('default', function() {
 });
 
 gulp.task('test', function () {
-  console.log(jasmine);
     return gulp.src('spec/*.js')
         .pipe(jasmine());
 });
