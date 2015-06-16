@@ -1,3 +1,5 @@
+/// <reference path="../features.ts"/>
+
 (function(){
     'use strict';
 
@@ -9,10 +11,11 @@
      *
      * @return {object}
      */
-     feature( 'views' )
+     feature()
     .view = function(selector){
         var _ = feature().libraries.lodash;
         var $ = feature().libraries.jquery;
+        var log = feature( 'core.logging' )();
         var _public = {};
 
         var _private = {
@@ -45,7 +48,16 @@
         };
 
         _public.incoming = function( data ){
-            // handle events
+          // handle a browser event,
+          // this involves extracting an event name and the passing
+          // it to the controller (which will typically have a state machine)
+
+          var event = '';
+          if( data.toElement ){ // this is an event
+              event = data.toElement.innerText.toLowerCase().replace(' ', '');
+          }
+
+          _.each( _private.listeners, function( listener ){ listener.step(event); });
         };
 
         return _public;

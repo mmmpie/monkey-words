@@ -1,12 +1,17 @@
 /// <reference path="../features.ts"/>
-(function () {
-    feature('core').logging = function () {
-        var _this = this;
+
+interface Logger {
+    info(obj: any): Logger;
+}
+
+(function(){
+    feature( 'core' )
+    .logging = function(){
         var _public = {
-            info: function (obj) {
+            info: (obj) => {
                 console.log(obj);
                 // nothing real
-                return _this;
+                return this;
             }
         };
         return _public;

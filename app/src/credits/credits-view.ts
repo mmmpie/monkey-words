@@ -1,9 +1,11 @@
+/// <reference path="../features.ts"/>
+
 (function(){
     'use strict';
 
-    feature( 'credits' )
-    .view = function(selector){
-        var _public = feature().core.view();
+    feature( 'view' )
+    .credit = function(selector){
+        var _public = feature().view();
 
         selector = selector | '.main';
         _public.selector( selector );

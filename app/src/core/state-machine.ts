@@ -1,13 +1,27 @@
+interface StateMachine {
+	setInitialState(name: string): StateMachine;
+	setTerminalState(name: string): StateMachine;
+	start(): StateMachine;
+	stop(): StateMachine;
+	addTransition(from: String, to: string[]): StateMachine;
+	addListener(listener: Function): StateMachine;
+	step(event: string): StateMachine;
+	isError(): boolean;
+	isTerminal(): boolean;
+	state(): string;
+	history(): string[];
+	addSubFsm( state: String, fsm: StateMachine): StateMachine;
+}
+
 (function(){
 	'use strict';
 
-	feature( 'stateMachines' )
+	feature()
 	.stateMachine = function(){
-		var _log = feature().core.logging();
+		var _log: Logger = feature().core.logging();
 		var _ = feature().libraries.lodash;
-		var $ = feature().libraries.jquery;
 
-		var _public = {};
+		var _public: any = {};
 		var running = false;
 
 		var listeners = [];
@@ -26,7 +40,9 @@
 			_.each( listeners, function( listener ){ listener( _public, currentState ); });
 		};
 
-		var canTransition = function( state, event ){
+		var canTransition = function( state, event ):boolean{
+			_log.info( state );
+			_log.info( event );
 			return state.name === event;
 		};
 
@@ -97,11 +113,15 @@
 
 			// if the to state was named
 			if(to){
-				// create the to state if it doesnt exist
-				newStates[to] = newStates[to] || createState( to );
+				if(!_.isArray(to)){ to = [to]; }
 
-				// record the transition between the two states
-				newStates[from].to.push( newStates[to].name );
+				_.each( to, function(to){
+					// create the to state if it doesnt exist
+					newStates[to] = newStates[to] || createState( to );
+
+					// record the transition between the two states
+					newStates[from].to.push( newStates[to].name );
+				});
 			}
 
 			states = newStates;
@@ -130,6 +150,7 @@
 		_public.step = function( event ){
 			var previousState = currentState;
 			_log.info( 'step' );
+			_log.info( event );
 
 			if( !running ){ throw 'state machine cannot be advanced, it is not running'; }
 
@@ -151,7 +172,9 @@
 				});
 				// if one was found take it
 				if( validTransition ){ transition( states[validTransition] ); }
-				else { transition( states.error ); }
+				else {
+					_log.info( 'not a valid transition' );
+					transition( states.error ); }
 			}
 			else {
 				// otherwise send the event to the sub machines

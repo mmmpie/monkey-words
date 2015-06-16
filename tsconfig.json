@@ -1,0 +1,42 @@
+{
+    "version": "1.5.0-alpha",
+    "compilerOptions": {
+        "target": "es5",
+        "module": "commonjs",
+        "declaration": false,
+        "noImplicitAny": false,
+        "removeComments": true,
+        "noLib": false,
+        "out": "build/app.js",
+        "sourceMap": true
+    },
+    "filesGlob": [
+        "./app/**/*.ts",
+        "./vendor/**/*.ts",
+        "!./node_modules/**/*.ts"
+    ],
+    "files": [
+        "./app/src/core/controller.ts",
+        "./app/src/core/dom.ts",
+        "./app/src/core/logging.ts",
+        "./app/src/core/model.ts",
+        "./app/src/core/state-machine.ts",
+        "./app/src/core/timer.ts",
+        "./app/src/core/view.ts",
+        "./app/src/credits/credits-controller.ts",
+        "./app/src/credits/credits-view.ts",
+        "./app/src/features.ts",
+        "./app/src/game/game-view.ts",
+        "./app/src/game/monkey-words-model.ts",
+        "./app/src/game/pieces-model.ts",
+        "./app/src/game/player-model.ts",
+        "./app/src/highscores/highscores-view.ts",
+        "./app/src/intro/intro-controller.ts",
+        "./app/src/intro/intro-view.ts",
+        "./app/src/main.ts",
+        "./app/src/main/main-controller.ts",
+        "./app/src/main/main-fsm.ts",
+        "./app/src/main/main-view.ts",
+        "./vendor/js/lodash.d.ts"
+    ]
+}

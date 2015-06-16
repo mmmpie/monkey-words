@@ -1,5 +1,19 @@
+declare var feature: any;
+declare var global: any;
+
+
+var globalScope;
+
+if(typeof(global) === 'object'){
+    globalScope = global;
+}
+else {
+    globalScope = window;
+}
+
 (function(){
     'use strict';
+    if(this.feature){ throw 'features already loaded'; }
 
     // the features are held in this closure
     var features = {};
@@ -36,4 +50,4 @@
 
         return feature;
     };
-}).call(typeof(global)=='undefined'?window:global); // create the feature access function in the global scope for node or in the window for browsers
+}).call(globalScope); // create the feature access function in the global scope for node or in the window for browsers

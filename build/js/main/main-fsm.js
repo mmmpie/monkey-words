@@ -1,17 +1,16 @@
-(function(){
-	'use strict';
-
-	module( 'stateMachines' )
-	.main = function(){
-		var _public = module().stateMachines.stateMachine();
-		
-		_public.addTransition( 'intro', ['highscores', 'demo', 'game']);
-		_public.addTransition( 'highscores', 'intro' );
-		_public.addTransition( 'demo', 'intro' );
-		_public.addTransition( 'game', 'highscores' );
-		_public.setInitialState( 'intro' );
-		_public.setTerminalState( 'intro' );
-
-		return _public;
-	};
+/// <reference path="../features.ts"/>
+(function () {
+    'use strict';
+    feature('stateMachine').main = function () {
+        var _public = feature().stateMachine();
+        _public.addTransition('start', ['intro', 'highscores', 'demo', 'game', 'credits']);
+        _public.addTransition('intro', ['highscores', 'demo', 'game', 'credits']);
+        _public.addTransition('highscores', ['start']);
+        _public.addTransition('demo', ['start']);
+        _public.addTransition('game', ['highscores']);
+        _public.addTransition('credits', ['start']);
+        _public.setInitialState('start');
+        _public.setTerminalState('intro');
+        return _public;
+    };
 })();

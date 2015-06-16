@@ -1,34 +1,28 @@
-(function(){
+/// <reference path="../features.ts"/>
+(function () {
     'use strict';
-
-    module( 'models' )
-    .pieces = function(){
-        var _ = module().libraries.lodash();
-        var _public = module().Models.model();
-
-        _public.setupPieces = function(){
-            var sum = function( data ){
+    feature('model').pieces = function () {
+        var _ = feature().libraries.lodash();
+        var _public = feature().model();
+        _public.setupPieces = function () {
+            var sum = function (data) {
                 var total = 0;
-                for( var key in data ){
+                for (var key in data) {
                     total += data[key];
                 }
-
                 return total;
             };
-
-            var pick = function( data, position ){
+            var pick = function (data, position) {
                 var total = 0;
-                for( var key in data ){
+                for (var key in data) {
                     total += data[key];
-                    if( total >= position ){
+                    if (total >= position) {
                         data[key]--;
                         return key;
                     }
                 }
-
                 return '';
             };
-
             var letterFrequency = {
                 a: 13,
                 b: 3,
@@ -57,44 +51,33 @@
                 y: 3,
                 z: 2
             };
-
             var letters = [];
-            var remainingCount = sum( letterFrequency );
-            while( remainingCount > 0 ){
-                var nextLetter = Math.floor(( Math.random() * remainingCount ) + 1 );
-                letters.push( pick( letterFrequency, nextLetter ));
+            var remainingCount = sum(letterFrequency);
+            while (remainingCount > 0) {
+                var nextLetter = Math.floor((Math.random() * remainingCount) + 1);
+                letters.push(pick(letterFrequency, nextLetter));
                 remainingCount--;
             }
-
             return letters;
         };
-
-        _public.render = function(){
-            for( var i = 0; i < pile.length; i++ ){
-                $('body').append( "<div class='letter'>" + pile[i] + "</div>" );
+        _public.render = function () {
+            for (var i = 0; i < pile.length; i++) {
+                $('body').append("<div class='letter'>" + pile[i] + "</div>");
             }
         };
-
-        _public.word = function(){
-
+        _public.word = function () {
         };
-
         // set up the pieces which are shared in the middle of the table
         var pile = methods.setupPieces();
-
         // there are the pieces in the player's hand
         var pieces = [];
-
         // words is an array of word objects
         // each word object knows which pieces it is usind
         // where it is on the board and if it is spelt correctly
         var words = [];
-
-
-        $( document ).ready(function() {
-              _public.render();
+        $(document).ready(function () {
+            _public.render();
         });
-
         return _public;
     };
 })();

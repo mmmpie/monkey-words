@@ -1,9 +1,11 @@
+/// <reference path="../features.ts"/>
+
 (function(){
     'use strict';
 
-    feature( 'intro' )
-    .view = function(){
-        var _public = feature().views.view();
+    feature( 'view' )
+    .intro = function(){
+        var _public = feature().view();
         _public.selector( 'body' );
 
         _public.render = function( data ){

@@ -1,10 +1,12 @@
+/// <reference path="../features.ts"/>
+
 (function(){
     'use strict';
 
-    feature( 'models' )
+    feature( 'model' )
     .pieces = function(){
         var _ = feature().libraries.lodash();
-        var _public = feature().Models.model();
+        var _public = feature().model();
 
         _public.setupPieces = function(){
             var sum = function( data ){

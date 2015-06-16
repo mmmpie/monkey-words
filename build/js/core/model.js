@@ -1,8 +1,7 @@
-(function(){
+/// <reference path="../features.ts"/>
+(function () {
     'use strict';
-
-    module( 'models' )
-    .model = function(){
+    feature().model = function () {
         var _public = {};
         return _public;
     };

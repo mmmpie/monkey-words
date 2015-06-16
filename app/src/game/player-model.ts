@@ -1,9 +1,11 @@
+/// <reference path="../features.ts"/>
+
 (function(){
     'use strict';
 
-    feature( 'models' )
+    feature( 'model' )
     .player = function(){
-        var _public = feature().models.model();
+        var _public = feature().model();
 
         var _private = {
             name: '',
