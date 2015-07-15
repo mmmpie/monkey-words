@@ -2,7 +2,9 @@
 
 div(
     div(
-        div( 'some text' )
+        div(
+            text( 'some text' )
+        )
     )
 )
 
@@ -11,7 +13,7 @@ div(
 div(
     div(
         attr( 'class', 'far'  ),
-        h1( 'A title' ),
+        h1( text( 'A title' )),
         text( 'A body' ),
         hr()
     )
@@ -48,20 +50,14 @@ var tableRow = (data)=>{
 };
 
 var container = div(
-    div(
-        table(
-            thead(
-                tr(
-                    th('A'),
-                    th('B'),
-                    th('C'),
-                    th('D')
-                )
-            ),
-            tbody(
-                tablerow(dataSetOne),
-                tablerow(dataSetTwo),
-                tablerow(dataSetThree)
+    eventSink(
+        'click', onClick,
+        div(
+            table(
+                columns(names),
+                data(statisticsA),
+                data(statisticsB),
+                data(statisticsC)
             )
         )
     )
@@ -75,17 +71,55 @@ var container = div(
     feature( 'core' )
     .dom = function(){
         var document = feature( 'libraries.document' );
+        var $ = feature().libraries.jquery;
         var _ = feature( 'libraries.lodash' );
         var elements = [];
 
         var _public = {
+            get: (selector)=>{
+                return $(selector);
+            },
+            eventTap: (...eventHandlers) => {
+                return (parent) => {
+                    for( var i = 0; i < eventHandlers.length; i += 2 ){
+                        parent.addEventListener(eventHandlers[i], eventHandlers[i+1]);
+                    }
+                };
+            },
+            eventSink: (...eventHandlers) => {
+                return (parent) => {
+                    for( var i = 0; i < eventHandlers.length; i += 2 ){
+                        parent.addEventListener(eventHandlers[i],
+                            (event) => {
+                                eventHandlers[i+1];
+                                event.stopPropagation()
+                            }
+                        );
+                    }
+                };
+            },
             div: (...children) => {
                 return _public.createElement('div', children);
+            },
+            h1: (...children) => {
+                return _public.createElement('h1', children);
+            },
+            button: (...children) => {
+                return _public.createElement('button', children);
+            },
+            td: (...children) => {
+                return _public.createElement('td', children);
+            },
+            tr: (...children) => {
+                return _public.createElement('tr', children);
+            },
+            table: (...children) => {
+                return _public.createElement('table', children);
             },
             attr: (...attributes) => {
                 return (parent) => {
                     for( var i = 0; i < attributes.length; i += 2 ){
-                        parent.attr(attributes[i], attributes[i+1]);
+                        parent.setAttribute(attributes[i], attributes[i+1]);
                     }
                 };
             },
@@ -113,6 +147,12 @@ var container = div(
                     // otherwise return the new element without any wrapping
                     else{ return newElement; }
                 };
+            },
+            render: ( views ) => {
+                var partialViews = _(views).map( 'render', _public );
+                return (parent) => {
+                    _(partialViews).map((view)=>{view(parent)});
+                }
             }
         };
 

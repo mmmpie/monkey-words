@@ -8,6 +8,7 @@
         var mainStateMachine = feature().stateMachine.main();
         var mainView = feature().view.main('body');
         var timer = feature().core.timer(1000);
+        var dom = feature().core.dom();
         // connect the view to receive events from the state machine
         // that is, the view will listen for state machine changes
         // and respond to them
@@ -16,7 +17,7 @@
         // connect the state machine to receive events from
         // the main view
         mainView.addListener(mainStateMachine);
-        mainView.render();
+        dom.render(mainView)(dom.get());
         // add listeners for the state machine events
         // each listener starts a sub controller
         // and attaches it as a child of the view

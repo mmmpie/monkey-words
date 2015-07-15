@@ -15,7 +15,8 @@
     .view = function(selector){
         var _ = feature().libraries.lodash;
         var $ = feature().libraries.jquery;
-        var log = feature( 'core.logging' )();
+        var dom = feature().core.dom();
+        var log = feature().core.logging();
         var _public = {};
 
         var _private = {
@@ -43,8 +44,9 @@
             listener( event );
         };
 
-        _public.render = function( data ){
-            $(_private.selector).append( '<div>test</div>' );
+        _public.render = function( viewFn ){
+            var rootElement = $()
+            var html = viewFn();
         };
 
         _public.incoming = function( data ){

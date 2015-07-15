@@ -5,29 +5,35 @@
 
   feature( 'view' )
   .main = function(selector){
+    var _ = feature( 'libraries.lodash' );
     var $ = feature( 'libraries.jquery' );
-    var _log = feature( 'core.logging' );
+    var log = feature( 'core.logging' );
     var _public = feature( 'view' )( selector );
-    var liveElement = undefined;
+    var dom = feature().core.dom();
+    var document = feature( 'libraries.document' );
+    
 
-    _public.attachTo(selector);
+    _public.attachTo( selector );
 
+    // the render method is special, it will get called
+    // in the object context of the dom library,
+    // giving it access to the methods defined in the dom
+    // library
     _public.render = function( data ){
-        var element = div(
+        return div(
             div(
-                h1( 'Monkey Words' )
-                .button( 'Play', {value: 'play'})
-                .button( 'Intro' )
-                .button( 'High Scores' )
-                .button( 'Credits' )
+                eventTap( 'click', _public.incoming ),
+                h1( text( 'Monkey Words' )),
+                button( text( 'Play' ), attr( 'value', 'play' )),
+                button( text( 'Intro' )),
+                button( text( 'High Scores' )),
+                button( text( 'Credits' ))
+            ),
+            div(
+                attr( 'id', 'view' ),
+                render( _public.children )
             )
-            .div({id:'view'})
-        )
-        .unwrap();
-
-        element.bind( 'click', _public.incoming );
-        liveElement = element;
-        _public.select().append(element);
+        );
     };
 
     return _public;
