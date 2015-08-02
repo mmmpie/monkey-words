@@ -49,19 +49,17 @@ var tableRow = (data)=>{
     }
 };
 
-var container = div(
-    eventSink(
-        'click', onClick,
-        div(
-            table(
-                columns(names),
-                data(statisticsA),
-                data(statisticsB),
-                data(statisticsC)
-            )
-        )
-    )
-);
+var container = div([
+    eventSink( 'click', onClick ),
+    div([
+        table([
+            columns(names),
+            data(statisticsA),
+            data(statisticsB),
+            data(statisticsC)
+        ])
+    ])
+]);
 
 */
 
@@ -70,15 +68,13 @@ var container = div(
 
     feature( 'core' )
     .dom = function(){
-        var document = feature( 'libraries.document' );
+        var document = feature().libraries.document;
         var $ = feature().libraries.jquery;
-        var _ = feature( 'libraries.lodash' );
+        var _ = feature().libraries.lodash;
         var elements = [];
 
         var _public = {
-            get: (selector)=>{
-                return $(selector);
-            },
+            get: $,
             eventTap: (...eventHandlers) => {
                 return (parent) => {
                     for( var i = 0; i < eventHandlers.length; i += 2 ){
@@ -91,62 +87,46 @@ var container = div(
                     for( var i = 0; i < eventHandlers.length; i += 2 ){
                         parent.addEventListener(eventHandlers[i],
                             (event) => {
-                                eventHandlers[i+1];
-                                event.stopPropagation()
+                                eventHandlers[i+1]();
+                                event.stopPropagation();
                             }
                         );
                     }
                 };
             },
-            div: (...children) => {
-                return _public.createElement('div', children);
-            },
-            h1: (...children) => {
-                return _public.createElement('h1', children);
-            },
-            button: (...children) => {
-                return _public.createElement('button', children);
-            },
-            td: (...children) => {
-                return _public.createElement('td', children);
-            },
-            tr: (...children) => {
-                return _public.createElement('tr', children);
-            },
-            table: (...children) => {
-                return _public.createElement('table', children);
-            },
-            attr: (...attributes) => {
-                return (parent) => {
-                    for( var i = 0; i < attributes.length; i += 2 ){
-                        parent.setAttribute(attributes[i], attributes[i+1]);
-                    }
-                };
-            },
-            text: (text) => {
-                return (parent) => {
-                    var newElement =  document.createTextNode( text );
-                    if(parent){ return parent.appendChild( newElement ); }
-                    // otherwise return the new element without any wrapping
-                    else{ return newElement; }
-                };
-            },
-            createElement: (elementName, children ) => {
-                return (parent) => {
-                    // create a new dom element based on the element name passed in
-                    var newElement =  document.createElement( elementName );
+            div: _.curry(_public.createElement)('div'),
+            h1: _.curry(_public.createElement)('h1')
+            button: _.curry(_public.createElement)('button'),
+            td: _.curry(_public.createElement)('td'),
+            tr: _.curry(_public.createElement)('tr'),
+            table: _.curry(_public.createElement)('table'),
+            attr: (attributes, parent]) => {
+                _(attributes).chunk(2).object();
 
-                    // now call all the children of the element and pass in
-                    // the element to used as the child's parent
-                    _(children).map((child)=>{ child(newElement)});
+                for( var i = 0; i < attributes.length; i += 2 ){
+                    parent.setAttribute(attributes[i], attributes[i+1]);
+                }
+            },
+            text: (text, parent) => {
+                var newElement =  document.createTextNode( text );
+                if(parent){ return parent.appendChild( newElement ); }
+                // otherwise return the new element without any wrapping
+                else{ return newElement; }
+            },
+            createElement: (elementName, children, parent ) => {
+                // create a new dom element based on the element name passed in
+                var newElement =  document.createElement( elementName );
 
-                    // if this element was passed a parent then
-                    // attach the new element to it
-                    if(parent){ return parent.appendChild( newElement ); }
+                // now call all the children of the element and pass in
+                // the element to used as the child's parent
+                _(children).map((child)=>{ child(newElement)});
 
-                    // otherwise return the new element without any wrapping
-                    else{ return newElement; }
-                };
+                // if this element was passed a parent then
+                // attach the new element to it
+                if(parent){ return parent.appendChild( newElement ); }
+
+                // otherwise return the new element without any wrapping
+                else{ return newElement; }
             },
             render: ( views ) => {
                 var partialViews = _(views).map( 'render', _public );

@@ -11,7 +11,7 @@
      *
      * @return {object}
      */
-     feature()
+    feature()
     .view = function(selector){
         var _ = feature().libraries.lodash;
         var $ = feature().libraries.jquery;
@@ -45,7 +45,7 @@
         };
 
         _public.render = function( viewFn ){
-            var rootElement = $()
+            var rootElement = $();
             var html = viewFn();
         };
 
